@@ -54,7 +54,7 @@ void Converter::run(int argc, char **argv) {
 
 		fs::create_directories(dir);
 
-		int succes = 0;
+		int success = 0;
 		for (int i = 1; i < argc-1; i++) {
 			path src(argv[i]);
 
@@ -62,10 +62,10 @@ void Converter::run(int argc, char **argv) {
 				printSourceError(src, false);
 			} else {
 				convertFile(src, dir / src.stem().concat(extDest));
-				succes++;
+				success++;
 			}
 		}
-		cout << cmd << ": " << ANSI_GREEN << "Converted " << succes << "/" << argc-2 << " files succesfully." << ANSI_RESET << endl;
+		cout << cmd << ": " << ANSI_GREEN << "Converted " << success << "/" << argc-2 << " files successfully." << ANSI_RESET << endl;
 	}
 	exit(EXIT_SUCCESS);
 }
