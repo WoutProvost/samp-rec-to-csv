@@ -4,17 +4,23 @@ project(samp-rec-to-csv
 	DESCRIPTION "File format converter from .rec to .csv and vice versa, which NPCs use in SA-MP to play back recordings"
 	LANGUAGES CXX)
 
+# Add these libraries to be built
+add_library(converter SHARED src/Converter.h src/Converter.cpp)
+
+# Define the dependencies of these libraries
+target_link_libraries(converter
+	rec_file
+	csv_file)
+
 # Add these executables to be built
 add_executable(rec2csv src/RecToCsv.cpp)
 add_executable(csv2rec src/CsvToRec.cpp)
 
 # Define the dependencies of these executables
 target_link_libraries(rec2csv
-	rec_file
-	csv_file)
+	converter)
 target_link_libraries(csv2rec
-	rec_file
-	csv_file)
+	converter)
 
 # Descend into these subdirectories
 add_subdirectory(src/data)
