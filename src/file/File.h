@@ -8,7 +8,7 @@
 #include "../data/HeaderDataBlock.h"
 #include "../data/OnFootDataBlock.h"
 #include "../data/VehicleDataBlock.h"
-#include "../data/HeaderType.h"
+#include "../data/PlayerRecordingType.h"
 
 using std::string;
 using std::ifstream;

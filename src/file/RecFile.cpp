@@ -18,7 +18,7 @@ vector<DataBlock*> RecFile::load() {
 	// Read data
 	while (input.peek() != EOF) {
 		switch (header->type) {
-			case HeaderType::ONFOOT: {
+			case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
 				OnFootDataBlock *onFoot = new OnFootDataBlock();				
 				input.read((char*)&onFoot->time, sizeof(onFoot->time));
 				input.read((char*)&onFoot->leftRight, sizeof(onFoot->leftRight));
@@ -45,7 +45,7 @@ vector<DataBlock*> RecFile::load() {
 				data.emplace_back(onFoot);
 				break;
 			}
-			case HeaderType::DRIVER: {
+			case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
 				VehicleDataBlock *vehicle = new VehicleDataBlock();
 				input.read((char*)&vehicle->time, sizeof(vehicle->time));
 				input.read((char*)&vehicle->vehicleId, sizeof(vehicle->vehicleId));
@@ -89,7 +89,7 @@ void RecFile::save(const vector<DataBlock*> &data) {
 	// Write data
 	for (int i = 1, n = data.size(); i < n; i++) {
 		switch (header->type) {
-			case HeaderType::ONFOOT: {
+			case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
 				OnFootDataBlock *onFoot = (OnFootDataBlock*)data[i];
 				output.write((char*)&onFoot->time, sizeof(onFoot->time));
 				output.write((char*)&onFoot->leftRight, sizeof(onFoot->leftRight));
@@ -114,7 +114,7 @@ void RecFile::save(const vector<DataBlock*> &data) {
 				output.write((char*)&animationFlags, sizeof(animationFlags));
 				break;
 			}
-			case HeaderType::DRIVER: {
+			case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
 				VehicleDataBlock *vehicle = (VehicleDataBlock*)data[i];
 				output.write((char*)&vehicle->time, sizeof(vehicle->time));
 				output.write((char*)&vehicle->vehicleId, sizeof(vehicle->vehicleId));

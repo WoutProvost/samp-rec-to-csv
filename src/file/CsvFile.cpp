@@ -45,7 +45,7 @@ vector<DataBlock*> CsvFile::load() {
 	while (input.peek() != EOF) {
 		fields = readLine();
 		switch (header->type) {
-			case HeaderType::ONFOOT: {
+			case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
 				OnFootDataBlock *onFoot = new OnFootDataBlock();
 				onFoot->time = stoi(fields[0]);
 				onFoot->leftRight = stoi(fields[1]);
@@ -79,7 +79,7 @@ vector<DataBlock*> CsvFile::load() {
 				data.emplace_back(onFoot);
 				break;
 			}
-			case HeaderType::DRIVER: {
+			case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
 				VehicleDataBlock *vehicle = new VehicleDataBlock();
 				vehicle->time = stoi(fields[0]);
 				vehicle->vehicleId = stoi(fields[1]);
@@ -135,7 +135,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 
 	// Write data
 	switch (header->type) {
-		case HeaderType::ONFOOT: {
+		case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
 			output << "#"
 				<< "time,"
 				<< "leftRight,"
@@ -170,7 +170,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 			;
 			break;
 		}
-		case HeaderType::DRIVER: {
+		case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
 			output << "#"
 				<< "time,"
 				<< "vehicleId,"
@@ -204,7 +204,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 	}
 	for (int i = 1, n = data.size(); i < n; i++) {
 		switch (header->type) {
-			case HeaderType::ONFOOT: {
+			case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
 				OnFootDataBlock *onFoot = (OnFootDataBlock*)data[i];
 				output
 					<< onFoot->time << ","
@@ -240,7 +240,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 				;
 				break;
 			}
-			case HeaderType::DRIVER: {
+			case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
 				VehicleDataBlock *vehicle = (VehicleDataBlock*)data[i];
 				output
 					<< vehicle->time << ","
