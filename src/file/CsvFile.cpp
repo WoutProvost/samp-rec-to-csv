@@ -1,9 +1,13 @@
 #include "CsvFile.h"
 #include <sstream>
+#include <iomanip>
+#include <limits>
 
 using std::stringstream;
 using std::stoi;
 using std::stof;
+using std::setprecision;
+using std::numeric_limits;
 
 CsvFile::CsvFile(const string &name) :
 	// Call base class method
@@ -119,6 +123,9 @@ vector<DataBlock*> CsvFile::load() {
 void CsvFile::save(const vector<DataBlock*> &data) {
 	// Call base class method
 	File::save(data);
+
+	// Set floating point precision
+	output << setprecision(numeric_limits<float>::max_digits10);
 
 	// Write header
 	HeaderDataBlock *header = (HeaderDataBlock*)data[0];
