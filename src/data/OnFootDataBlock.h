@@ -16,7 +16,7 @@ class OnFootDataBlock : public DataBlock {
 		uint8_t health = 0;
 		uint8_t armour = 0;
 		uint8_t weaponId = 0; // Only 6 trailing bits used
-		uint8_t weaponUnknown = 0; // Only 2 trailing bits used, which are the 2 leading bits from weaponId
+		uint8_t yesNo = 0; // Only 2 trailing bits used, which are the 2 leading bits from weaponId
 		uint8_t specialAction = 0;
 		float velocity[3] = {0.0, 0.0, 0.0};
 		float surfing[3] = {0.0, 0.0, 0.0};
