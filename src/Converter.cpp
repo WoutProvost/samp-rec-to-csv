@@ -1,5 +1,6 @@
 #include "Converter.h"
 #include <iostream>
+#include <cstring>
 #include <vector>
 #include "data/DataBlock.h"
 #include "file/RecFile.h"
@@ -27,8 +28,14 @@ Converter::Converter(const string &extSrc, const string extDest) :
 void Converter::run(int argc, char **argv) {
 	cmd = argv[0];
 
+	for (int i = 1; i < argc; i++) {
+		if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+			printUsageAndExitWithCode(false);
+		}
+	}
+
 	if (argc < 3) {
-		printUsage();
+		printUsageAndExitWithCode();
 	}
 
 	if (argc == 3) {
@@ -119,12 +126,12 @@ void Converter::printSourceError(const path &src, bool printUsageAndExit) {
 void Converter::printError(const string &msg, bool printUsageAndExit) {
 	cerr << cmd << ": " << ANSI_RED << msg << "." << ANSI_RESET << endl;
 	if (printUsageAndExit) {
-		printUsage();
+		printUsageAndExitWithCode();
 	}
 }
 
-void Converter::printUsage() {	
+void Converter::printUsageAndExitWithCode(bool fail) {	
 	cerr << "Usage: " << cmd << " [source" << extSrc << "] [destination" << extDest << "]" << endl;
 	cerr << "       " << cmd << " [source" << extSrc << "]... [directory]" << endl;
-	exit(EXIT_FAILURE);
+	exit(fail ? EXIT_FAILURE : EXIT_SUCCESS);
 }

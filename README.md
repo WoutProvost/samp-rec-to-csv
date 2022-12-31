@@ -6,7 +6,7 @@ This tool can be used to edit `.rec` files after recording the data:
 2. edit the `.csv` in something like Microsoft Excel or Google Spreadsheets
 3. convert back to `.rec` using `csv2rec`
 
-Special thanks to Mauzen for his work on figuring out and [documenting](https://team.sa-mp.com/wiki/.rec_file.html) the `.rec` file structure and Y_Less for YSI in which these structures were also defined.
+Special thanks to Mauzen for his work on figuring out and [documenting](https://team.sa-mp.com/wiki/.rec_file.html) the `.rec` file structure and Y_Less for YSI in which these structures are also defined.
 
 ### Building
 ```bash
@@ -18,6 +18,6 @@ make
 
 ### Running
 ```bash
-./rec2csv
-./csv2rec
+./rec2csv -h
+./csv2rec -h
 ```
