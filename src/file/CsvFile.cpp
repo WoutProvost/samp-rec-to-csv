@@ -68,21 +68,22 @@ vector<DataBlock*> CsvFile::load() {
 				onFoot->health = stoi(fields[11]);
 				onFoot->armour = stoi(fields[12]);
 				onFoot->weaponId = stoi(fields[13]);
-				onFoot->specialAction = stoi(fields[14]);
-				onFoot->velocity[0] = stof(fields[15]);
-				onFoot->velocity[1] = stof(fields[16]);
-				onFoot->velocity[2] = stof(fields[17]);
-				onFoot->surfing[0] = stof(fields[18]);
-				onFoot->surfing[1] = stof(fields[19]);
-				onFoot->surfing[2] = stof(fields[20]);
-				onFoot->surfingVehicleId = stoi(fields[21]);
-				onFoot->animationId = stoi(fields[22]);
-				onFoot->animationDelta = stof(fields[23]);
-				onFoot->animationLoop = stoi(fields[24]);
-				onFoot->animationLock[0] = stoi(fields[25]);
-				onFoot->animationLock[1] = stoi(fields[26]);
-				onFoot->animationFreeze = stoi(fields[27]);
-				onFoot->animationTime = stoi(fields[28]);
+				onFoot->weaponUnknown = stoi(fields[14]);
+				onFoot->specialAction = stoi(fields[15]);
+				onFoot->velocity[0] = stof(fields[16]);
+				onFoot->velocity[1] = stof(fields[17]);
+				onFoot->velocity[2] = stof(fields[18]);
+				onFoot->surfing[0] = stof(fields[19]);
+				onFoot->surfing[1] = stof(fields[20]);
+				onFoot->surfing[2] = stof(fields[21]);
+				onFoot->surfingVehicleId = stoi(fields[22]);
+				onFoot->animationId = stoi(fields[23]);
+				onFoot->animationDelta = stof(fields[24]);
+				onFoot->animationLoop = stoi(fields[25]);
+				onFoot->animationLock[0] = stoi(fields[26]);
+				onFoot->animationLock[1] = stoi(fields[27]);
+				onFoot->animationFreeze = stoi(fields[28]);
+				onFoot->animationTime = stoi(fields[29]);
 				data.emplace_back(onFoot);
 				break;
 			}
@@ -107,14 +108,15 @@ vector<DataBlock*> CsvFile::load() {
 				vehicle->health = stoi(fields[16]);
 				vehicle->armour = stoi(fields[17]);
 				vehicle->weaponId = stoi(fields[18]);
-				vehicle->sirenState = stoi(fields[19]);
-				vehicle->gearState = stoi(fields[20]);
-				vehicle->trailerId = stoi(fields[21]);
+				vehicle->weaponUnknown = stoi(fields[19]);
+				vehicle->sirenState = stoi(fields[20]);
+				vehicle->gearState = stoi(fields[21]);
+				vehicle->trailerId = stoi(fields[22]);
 				if (header->hydra) {
-					vehicle->hydraReactorAngle[0] = stoi(fields[22]);
-					vehicle->hydraReactorAngle[1] = stoi(fields[23]);
+					vehicle->hydraReactorAngle[0] = stoi(fields[23]);
+					vehicle->hydraReactorAngle[1] = stoi(fields[24]);
 				} else {
-					vehicle->trainSpeed = stof(fields[22]);
+					vehicle->trainSpeed = stof(fields[23]);
 				}
 				data.emplace_back(vehicle);
 				break;
@@ -182,6 +184,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 				<< "health,"
 				<< "armour,"
 				<< "weaponId,"
+				<< "weaponUnknown,"
 				<< "specialAction,"
 				<< "velocityX,"
 				<< "velocityY,"
@@ -222,6 +225,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 				<< "health,"
 				<< "armour,"
 				<< "weaponId,"
+				<< "weaponUnknown,"
 				<< "sirenState,"
 				<< "gearState,"
 				<< "trailerId,"
@@ -260,6 +264,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 					<< +onFoot->health << ","
 					<< +onFoot->armour << ","
 					<< +onFoot->weaponId << ","
+					<< +onFoot->weaponUnknown << ","
 					<< +onFoot->specialAction << ","
 					<< onFoot->velocity[0] << ','
 					<< onFoot->velocity[1] << ','
@@ -301,6 +306,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 					<< +vehicle->health << ","
 					<< +vehicle->armour << ","
 					<< +vehicle->weaponId << ","
+					<< +vehicle->weaponUnknown << ","
 					<< +vehicle->sirenState << ","
 					<< +vehicle->gearState << ","
 					<< vehicle->trailerId << ","

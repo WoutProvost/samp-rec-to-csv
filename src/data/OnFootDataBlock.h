@@ -16,6 +16,7 @@ class OnFootDataBlock : public DataBlock {
 		uint8_t health = 0;
 		uint8_t armour = 0;
 		uint8_t weaponId = 0;
+		uint8_t weaponUnknown = 0;
 		uint8_t specialAction = 0;
 		float velocity[3] = {0.0, 0.0, 0.0};
 		float surfing[3] = {0.0, 0.0, 0.0};
