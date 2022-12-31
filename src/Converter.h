@@ -17,9 +17,9 @@ class Converter {
 		string extDest;
 
 		// Methods
-		void convertFile(const path &src, const path &dest);
-		void printSourceError(const path &src, bool exit = true);
-		void printError(const string &msg, bool exit = true);
+		bool convertFile(const path &src, const path &dest, bool exitOnError = true);
+		void printSourceError(const path &src, bool printUsageAndExit = true);
+		void printError(const string &msg, bool printUsageAndExit = true);
 		void printUsage();
 
 	public:

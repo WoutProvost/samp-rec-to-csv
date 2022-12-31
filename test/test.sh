@@ -29,7 +29,7 @@ cd ../build
 
 # Count if input and both output folders contain same amount of files
 count_example=$(ls $DIR_EXAMPLE | wc -l)
-if [ $count_example -ne $(ls $DIR_REC2CSV | wc -l) ] || [ $(ls $DIR_REC2CSV | wc -l) -ne $(ls $DIR_CSV2REC | wc -l) ]; then
+if [ $count_example -ne $(ls $DIR_REC2CSV | wc -l) ] || [ $count_example -ne $(ls $DIR_CSV2REC | wc -l) ]; then
 	error "Unequal amount of files"
 	cleanup
 fi

@@ -1,4 +1,7 @@
 #include "RecFile.h"
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 RecFile::RecFile(const string &name) :
 	// Call base class method
@@ -15,71 +18,95 @@ vector<DataBlock*> RecFile::load() {
 	input.read((char*)&header->type, sizeof(header->type));
 	data.emplace_back(header);
 
-	// Read data
-	bool hydra = true;
-	while (input.peek() != EOF) {
-		switch (header->type) {
-			case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
-				OnFootDataBlock *onFoot = new OnFootDataBlock();				
-				input.read((char*)&onFoot->time, sizeof(onFoot->time));
-				input.read((char*)&onFoot->leftRight, sizeof(onFoot->leftRight));
-				input.read((char*)&onFoot->upDown, sizeof(onFoot->upDown));
-				input.read((char*)&onFoot->keys, sizeof(onFoot->keys));
-				input.read((char*)&onFoot->position, sizeof(onFoot->position));
-				input.read((char*)&onFoot->angle, sizeof(onFoot->angle));
-				input.read((char*)&onFoot->health, sizeof(onFoot->health));
-				input.read((char*)&onFoot->armour, sizeof(onFoot->armour));
-				uint8_t weapon = 0;
-				input.read((char*)&weapon, sizeof(weapon));
-				onFoot->weaponId = weapon & 0x3F;
-				onFoot->weaponUnknown = weapon >> 6 & 0x3;
-				input.read((char*)&onFoot->specialAction, sizeof(onFoot->specialAction));
-				input.read((char*)&onFoot->velocity, sizeof(onFoot->velocity));
-				input.read((char*)&onFoot->surfing, sizeof(onFoot->surfing));
-				input.read((char*)&onFoot->surfingVehicleId, sizeof(onFoot->surfingVehicleId));
-				input.read((char*)&onFoot->animationId, sizeof(onFoot->animationId));
-				uint16_t animationFlags = 0;
-				input.read((char*)&animationFlags, sizeof(animationFlags));
-				onFoot->animationDelta = (float)(animationFlags & 0xFF);
-				onFoot->animationLoop = (animationFlags >> 8 & 0x1) != 0;
-				onFoot->animationLock[0] = (animationFlags >> 9 & 0x1) != 0;
-				onFoot->animationLock[1] = (animationFlags >> 10 & 0x1) != 0;
-				onFoot->animationFreeze = (animationFlags >> 11 & 0x1) != 0;
-				onFoot->animationTime = (animationFlags >> 12 & 0xF);
-				data.emplace_back(onFoot);
-				break;
+	// Check file size
+	bool corrupt = false;
+	uintmax_t size = fs::file_size(name);
+	switch (header->type) {
+		case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
+			if ((size-8) % 72 != 0) {
+				corrupt = true;
+				delete header;
+				data.clear();
 			}
-			case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
-				VehicleDataBlock *vehicle = new VehicleDataBlock();
-				input.read((char*)&vehicle->time, sizeof(vehicle->time));
-				input.read((char*)&vehicle->vehicleId, sizeof(vehicle->vehicleId));
-				input.read((char*)&vehicle->leftRight, sizeof(vehicle->leftRight));
-				input.read((char*)&vehicle->upDown, sizeof(vehicle->upDown));
-				input.read((char*)&vehicle->keys, sizeof(vehicle->keys));
-				input.read((char*)&vehicle->angle, sizeof(vehicle->angle));
-				input.read((char*)&vehicle->position, sizeof(vehicle->position));
-				input.read((char*)&vehicle->velocity, sizeof(vehicle->velocity));
-				input.read((char*)&vehicle->vehicleHealth, sizeof(vehicle->vehicleHealth));
-				input.read((char*)&vehicle->health, sizeof(vehicle->health));
-				input.read((char*)&vehicle->armour, sizeof(vehicle->armour));
-				uint8_t weapon = 0;
-				input.read((char*)&weapon, sizeof(weapon));
-				vehicle->weaponId = weapon & 0x3F;
-				vehicle->weaponUnknown = weapon >> 6 & 0x3;
-				input.read((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
-				input.read((char*)&vehicle->gearState, sizeof(vehicle->gearState));
-				input.read((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
-				input.read((char*)&vehicle->hydraReactorAngle, sizeof(vehicle->hydraReactorAngle));
-				if (vehicle->hydraReactorAngle[0] > 5000 || vehicle->hydraReactorAngle[1] > 5000) {
-					hydra = false;
-				}
-				data.emplace_back(vehicle);
-				break;
+			break;
+		}
+		case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
+			if ((size-8) % 67 != 0) {
+				corrupt = true;
+				delete header;
+				data.clear();
 			}
+			break;
 		}
 	}
-	if (header->type == PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER) {
-		header->hydra = hydra;
+
+	// Read data
+	if (!corrupt) {
+		bool hydra = true;
+		while (input.peek() != EOF) {
+			switch (header->type) {
+				case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
+					OnFootDataBlock *onFoot = new OnFootDataBlock();				
+					input.read((char*)&onFoot->time, sizeof(onFoot->time));
+					input.read((char*)&onFoot->leftRight, sizeof(onFoot->leftRight));
+					input.read((char*)&onFoot->upDown, sizeof(onFoot->upDown));
+					input.read((char*)&onFoot->keys, sizeof(onFoot->keys));
+					input.read((char*)&onFoot->position, sizeof(onFoot->position));
+					input.read((char*)&onFoot->angle, sizeof(onFoot->angle));
+					input.read((char*)&onFoot->health, sizeof(onFoot->health));
+					input.read((char*)&onFoot->armour, sizeof(onFoot->armour));
+					uint8_t weapon = 0;
+					input.read((char*)&weapon, sizeof(weapon));
+					onFoot->weaponId = weapon & 0x3F;
+					onFoot->weaponUnknown = weapon >> 6 & 0x3;
+					input.read((char*)&onFoot->specialAction, sizeof(onFoot->specialAction));
+					input.read((char*)&onFoot->velocity, sizeof(onFoot->velocity));
+					input.read((char*)&onFoot->surfing, sizeof(onFoot->surfing));
+					input.read((char*)&onFoot->surfingVehicleId, sizeof(onFoot->surfingVehicleId));
+					input.read((char*)&onFoot->animationId, sizeof(onFoot->animationId));
+					uint16_t animationFlags = 0;
+					input.read((char*)&animationFlags, sizeof(animationFlags));
+					onFoot->animationDelta = (float)(animationFlags & 0xFF);
+					onFoot->animationLoop = (animationFlags >> 8 & 0x1) != 0;
+					onFoot->animationLock[0] = (animationFlags >> 9 & 0x1) != 0;
+					onFoot->animationLock[1] = (animationFlags >> 10 & 0x1) != 0;
+					onFoot->animationFreeze = (animationFlags >> 11 & 0x1) != 0;
+					onFoot->animationTime = (animationFlags >> 12 & 0xF);
+					data.emplace_back(onFoot);
+					break;
+				}
+				case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
+					VehicleDataBlock *vehicle = new VehicleDataBlock();
+					input.read((char*)&vehicle->time, sizeof(vehicle->time));
+					input.read((char*)&vehicle->vehicleId, sizeof(vehicle->vehicleId));
+					input.read((char*)&vehicle->leftRight, sizeof(vehicle->leftRight));
+					input.read((char*)&vehicle->upDown, sizeof(vehicle->upDown));
+					input.read((char*)&vehicle->keys, sizeof(vehicle->keys));
+					input.read((char*)&vehicle->angle, sizeof(vehicle->angle));
+					input.read((char*)&vehicle->position, sizeof(vehicle->position));
+					input.read((char*)&vehicle->velocity, sizeof(vehicle->velocity));
+					input.read((char*)&vehicle->vehicleHealth, sizeof(vehicle->vehicleHealth));
+					input.read((char*)&vehicle->health, sizeof(vehicle->health));
+					input.read((char*)&vehicle->armour, sizeof(vehicle->armour));
+					uint8_t weapon = 0;
+					input.read((char*)&weapon, sizeof(weapon));
+					vehicle->weaponId = weapon & 0x3F;
+					vehicle->weaponUnknown = weapon >> 6 & 0x3;
+					input.read((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
+					input.read((char*)&vehicle->gearState, sizeof(vehicle->gearState));
+					input.read((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
+					input.read((char*)&vehicle->hydraReactorAngle, sizeof(vehicle->hydraReactorAngle));
+					if (vehicle->hydraReactorAngle[0] > 5000 || vehicle->hydraReactorAngle[1] > 5000) {
+						hydra = false;
+					}
+					data.emplace_back(vehicle);
+					break;
+				}
+			}
+		}
+		if (header->type == PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER) {
+			header->hydra = hydra;
+		}
 	}
 
 	input.close();

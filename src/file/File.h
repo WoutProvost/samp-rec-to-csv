@@ -19,11 +19,11 @@ class File {
 
 	private:
 		// Attributes
-		string name;
 		bool binary;
 
 	protected:
 		// Attributes
+		string name;
 		ifstream input;
 		ofstream output;
 

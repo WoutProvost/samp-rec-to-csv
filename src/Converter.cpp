@@ -61,8 +61,9 @@ void Converter::run(int argc, char **argv) {
 			if (!fs::is_regular_file(src) || src.extension() != extSrc) {
 				printSourceError(src, false);
 			} else {
-				convertFile(src, dir / src.stem().concat(extDest));
-				success++;
+				if (convertFile(src, dir / src.stem().concat(extDest), false)) {
+					success++;
+				}
 			}
 		}
 		cout << cmd << ": " << ANSI_GREEN << "Converted " << success << "/" << argc-2 << " files successfully." << ANSI_RESET << endl;
@@ -70,7 +71,7 @@ void Converter::run(int argc, char **argv) {
 	exit(EXIT_SUCCESS);
 }
 
-void Converter::convertFile(const path &src, const path &dest) {
+bool Converter::convertFile(const path &src, const path &dest, bool exitOnError) {
 	File *input;
 	File *output;
 
@@ -85,23 +86,39 @@ void Converter::convertFile(const path &src, const path &dest) {
 		output = new RecFile(dest);
 	}
 
+	// Load data from source file
 	vector<DataBlock*> data = input->load();
-	output->save(data);
 
-	for (auto block : data) {
-		delete block;
+	if (data.empty()) {
+		// Handle corrupt source file
+		delete input;
+		delete output;
+		printError("Source '" + src.string() + "' is corrupt", false);
+		if (exitOnError) {
+			exit(EXIT_FAILURE);
+		}
+		return false;
+	} else {
+		// Save data to destination file
+		output->save(data);
+
+		for (auto block : data) {
+			delete block;
+		}
+		data.clear();
+		delete input;
+		delete output;
+		return true;
 	}
-	delete input;
-	delete output;
 }
 
-void Converter::printSourceError(const path &src, bool exit) {
-	printError("Source '" + src.string() + "' is not an existing '" + extSrc + "' file", exit);
+void Converter::printSourceError(const path &src, bool printUsageAndExit) {
+	printError("Source '" + src.string() + "' is not an existing '" + extSrc + "' file", printUsageAndExit);
 }
 
-void Converter::printError(const string &msg, bool exit) {
+void Converter::printError(const string &msg, bool printUsageAndExit) {
 	cerr << cmd << ": " << ANSI_RED << msg << "." << ANSI_RESET << endl;
-	if (exit) {
+	if (printUsageAndExit) {
 		printUsage();
 	}
 }
