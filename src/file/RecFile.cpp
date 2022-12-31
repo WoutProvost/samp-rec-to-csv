@@ -1,10 +1,5 @@
 #include "RecFile.h"
 
-union FloatOrInteger {
-	float f;
-	uint32_t i;
-};
-
 RecFile::RecFile(const string &name) :
 	// Call base class method
 	File::File(name, true) {
@@ -21,6 +16,7 @@ vector<DataBlock*> RecFile::load() {
 	data.emplace_back(header);
 
 	// Read data
+	bool hydra = true;
 	while (input.peek() != EOF) {
 		switch (header->type) {
 			case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
@@ -67,15 +63,17 @@ vector<DataBlock*> RecFile::load() {
 				input.read((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
 				input.read((char*)&vehicle->gearState, sizeof(vehicle->gearState));
 				input.read((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
-				FloatOrInteger hydraReactorAngleAndTrainSpeed;
-				input.read((char*)&hydraReactorAngleAndTrainSpeed, sizeof(hydraReactorAngleAndTrainSpeed));
-				vehicle->hydraReactorAngle[0] = hydraReactorAngleAndTrainSpeed.i & 0xFFFF;
-				vehicle->hydraReactorAngle[1] = hydraReactorAngleAndTrainSpeed.i >> 16 & 0xFFFF;
-				vehicle->trainSpeed = hydraReactorAngleAndTrainSpeed.f;
+				input.read((char*)&vehicle->hydraReactorAngle, sizeof(vehicle->hydraReactorAngle));
+				if (vehicle->hydraReactorAngle[0] > 5000 || vehicle->hydraReactorAngle[1] > 5000) {
+					hydra = false;
+				}
 				data.emplace_back(vehicle);
 				break;
 			}
 		}
+	}
+	if (header->type == PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER) {
+		header->hydra = hydra;
 	}
 
 	input.close();
@@ -136,12 +134,7 @@ void RecFile::save(const vector<DataBlock*> &data) {
 				output.write((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
 				output.write((char*)&vehicle->gearState, sizeof(vehicle->gearState));
 				output.write((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
-				FloatOrInteger trainSpeed;
-				trainSpeed.f = vehicle->trainSpeed;
-				uint32_t hydraReactorAngleAndTrainSpeed = vehicle->hydraReactorAngle[0]
-														| (vehicle->hydraReactorAngle[1] << 16)
-														| trainSpeed.i;
-				output.write((char*)&hydraReactorAngleAndTrainSpeed, sizeof(hydraReactorAngleAndTrainSpeed));
+				output.write((char*)&vehicle->hydraReactorAngle, sizeof(vehicle->hydraReactorAngle));
 				break;
 			}
 		}

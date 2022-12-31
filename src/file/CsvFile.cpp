@@ -43,6 +43,9 @@ vector<DataBlock*> CsvFile::load() {
 	HeaderDataBlock *header = new HeaderDataBlock();
 	header->version = stoi(fields[0]);
 	header->type = stoi(fields[1]);
+	if (header->type == PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER) {
+		header->hydra = stoi(fields[2]);
+	}
 	data.emplace_back(header);
 
 	// Read data
@@ -107,9 +110,12 @@ vector<DataBlock*> CsvFile::load() {
 				vehicle->sirenState = stoi(fields[19]);
 				vehicle->gearState = stoi(fields[20]);
 				vehicle->trailerId = stoi(fields[21]);
-				vehicle->hydraReactorAngle[0] = stoi(fields[22]);
-				vehicle->hydraReactorAngle[1] = stoi(fields[23]);
-				vehicle->trainSpeed = stof(fields[24]);
+				if (header->hydra) {
+					vehicle->hydraReactorAngle[0] = stoi(fields[22]);
+					vehicle->hydraReactorAngle[1] = stoi(fields[23]);
+				} else {
+					vehicle->trainSpeed = stof(fields[22]);
+				}
 				data.emplace_back(vehicle);
 				break;
 			}
@@ -132,13 +138,31 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 	output << "#"		
 		<< "version,"
 		<< "type"
-		<< "\n"
-	;
+	;	
+	if (header->type == PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER) {
+		output << ","
+			<< "hydra"
+			<< "\n"
+		;
+	} else {
+		output
+			<< "\n"
+		;
+	}
 	output
 		<< header->version << ","
 		<< header->type
-		<< "\n"
 	;
+	if (header->type == PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER) {
+		output << ","
+			<< header->hydra
+			<< "\n"
+		;
+	} else {
+		output
+			<< "\n"
+		;
+	}
 
 	// Write data
 	switch (header->type) {
@@ -201,11 +225,19 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 				<< "sirenState,"
 				<< "gearState,"
 				<< "trailerId,"
-				<< "hydraReactorAngle0,"
-				<< "hydraReactorAngle1,"
-				<< "trainSpeed"
-				<< "\n"
 			;
+			if (header->hydra) {
+				output
+					<< "hydraReactorAngle0,"
+					<< "hydraReactorAngle1"
+					<< "\n"
+				;
+			} else {
+				output
+					<< "trainSpeed"
+					<< "\n"
+				;
+			}
 			break;
 		}
 	}
@@ -272,11 +304,19 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 					<< +vehicle->sirenState << ","
 					<< +vehicle->gearState << ","
 					<< vehicle->trailerId << ","
-					<< vehicle->hydraReactorAngle[0] << ","
-					<< vehicle->hydraReactorAngle[1] << ","
-					<< vehicle->trainSpeed
-					<< "\n"
-				;
+				;					
+				if (header->hydra) {
+					output
+						<< vehicle->hydraReactorAngle[0] << ","
+						<< vehicle->hydraReactorAngle[1]
+						<< "\n"
+					;
+				} else {
+					output
+						<< vehicle->trainSpeed
+						<< "\n"
+					;
+				}
 				break;
 			}
 		}

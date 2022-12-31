@@ -22,8 +22,10 @@ class VehicleDataBlock : public DataBlock {
 		uint8_t sirenState = 0;
 		uint8_t gearState = 0;
 		uint16_t trailerId = 0;
-		uint16_t hydraReactorAngle[2] = {0, 0};
-		float trainSpeed = 0.0;
+		union {
+			uint16_t hydraReactorAngle[2] = {0, 0};
+			float trainSpeed;
+		};
 
 };
 
