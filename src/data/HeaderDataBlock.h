@@ -7,9 +7,9 @@ class HeaderDataBlock : public DataBlock {
 
 	public:
 		// Fields
-		uint32_t version = 0;
-		uint32_t type = 0;
-		bool hydra = false; // Custom field not present in .rec file
+		uint32_t version;
+		uint32_t type;
+		bool hydra; // Custom field not present in .rec file
 
 };
 
