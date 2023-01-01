@@ -108,12 +108,12 @@ vector<DataBlock*> CsvFile::load() {
 					onFoot->surfing[2] = stof(fields[21]);
 					onFoot->surfingVehicleId = stoi(fields[22]);
 					onFoot->animationId = stoi(fields[23]);
-					onFoot->animationDelta = stof(fields[24]);
-					onFoot->animationLoop = stoi(fields[25]);
-					onFoot->animationLock[0] = stoi(fields[26]);
-					onFoot->animationLock[1] = stoi(fields[27]);
-					onFoot->animationFreeze = stoi(fields[28]);
-					onFoot->animationTime = stoi(fields[29]);
+					onFoot->animationFlags.animationDelta = stof(fields[24]);
+					onFoot->animationFlags.animationLoop = stoi(fields[25]);
+					onFoot->animationFlags.animationLockX = stoi(fields[26]);
+					onFoot->animationFlags.animationLockY = stoi(fields[27]);
+					onFoot->animationFlags.animationFreeze = stoi(fields[28]);
+					onFoot->animationFlags.animationTime = stoi(fields[29]);
 					data.emplace_back(onFoot);
 					break;
 				}
@@ -315,12 +315,12 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 					<< onFoot->surfing[2] << ','
 					<< onFoot->surfingVehicleId << ","
 					<< onFoot->animationId << ","
-					<< onFoot->animationDelta << ","
-					<< onFoot->animationLoop << ","
-					<< onFoot->animationLock[0] << ","
-					<< onFoot->animationLock[1] << ","
-					<< onFoot->animationFreeze << ","
-					<< +onFoot->animationTime
+					<< +onFoot->animationFlags.animationDelta << ","
+					<< onFoot->animationFlags.animationLoop << ","
+					<< onFoot->animationFlags.animationLockX << ","
+					<< onFoot->animationFlags.animationLockY << ","
+					<< onFoot->animationFlags.animationFreeze << ","
+					<< +onFoot->animationFlags.animationTime
 					<< "\n"
 				;
 				break;

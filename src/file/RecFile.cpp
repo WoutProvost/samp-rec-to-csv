@@ -61,14 +61,7 @@ vector<DataBlock*> RecFile::load() {
 					input.read((char*)&onFoot->surfing, sizeof(onFoot->surfing));
 					input.read((char*)&onFoot->surfingVehicleId, sizeof(onFoot->surfingVehicleId));
 					input.read((char*)&onFoot->animationId, sizeof(onFoot->animationId));
-					uint16_t animationFlags = 0;
-					input.read((char*)&animationFlags, sizeof(animationFlags));
-					onFoot->animationDelta = (float)(animationFlags & 0xFF);
-					onFoot->animationLoop = (animationFlags >> 8 & 0x1) != 0;
-					onFoot->animationLock[0] = (animationFlags >> 9 & 0x1) != 0;
-					onFoot->animationLock[1] = (animationFlags >> 10 & 0x1) != 0;
-					onFoot->animationFreeze = (animationFlags >> 11 & 0x1) != 0;
-					onFoot->animationTime = (animationFlags >> 12 & 0xF);
+					input.read((char*)&onFoot->animationFlags, sizeof(onFoot->animationFlags));
 					data.emplace_back(onFoot);
 					break;
 				}
@@ -135,13 +128,7 @@ void RecFile::save(const vector<DataBlock*> &data) {
 				output.write((char*)&onFoot->surfing, sizeof(onFoot->surfing));
 				output.write((char*)&onFoot->surfingVehicleId, sizeof(onFoot->surfingVehicleId));
 				output.write((char*)&onFoot->animationId, sizeof(onFoot->animationId));
-				uint16_t animationFlags = ((uint8_t)onFoot->animationDelta & 0xFF)
-										| (onFoot->animationLoop << 8)
-										| (onFoot->animationLock[0] << 9)
-										| (onFoot->animationLock[1] << 10)
-										| (onFoot->animationFreeze << 11)
-										| (onFoot->animationTime << 12);
-				output.write((char*)&animationFlags, sizeof(animationFlags));
+				output.write((char*)&onFoot->animationFlags, sizeof(onFoot->animationFlags));
 				break;
 			}
 			case PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER: {
