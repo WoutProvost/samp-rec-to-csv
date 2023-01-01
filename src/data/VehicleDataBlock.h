@@ -18,10 +18,12 @@ class VehicleDataBlock : public DataBlock {
 		float vehicleHealth;
 		uint8_t health;
 		uint8_t armour;
-		uint8_t weaponId; // Only 6 trailing bits used
-		uint8_t yesNo; // Only 2 trailing bits used, which are the 2 leading bits from weaponId
-		bool sirenState; // Full 8 bits wide (0 = siren off, 1 = siren on)
-		bool gearState; // Full 8 bits wide (0 = gear down, 1 = gear up)
+		struct {
+			uint8_t weaponId : 6;
+			uint8_t yesNo : 2;
+		} weaponIdYesNo;
+		bool sirenState; // 0 = siren off, 1 = siren on
+		bool gearState; // 0 = gear down, 1 = gear up
 		uint16_t trailerId;
 		union {
 			uint16_t hydraReactorAngle[2]; // 0 to 5000

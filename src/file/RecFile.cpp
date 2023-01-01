@@ -55,10 +55,7 @@ vector<DataBlock*> RecFile::load() {
 					input.read((char*)&onFoot->angle, sizeof(onFoot->angle));
 					input.read((char*)&onFoot->health, sizeof(onFoot->health));
 					input.read((char*)&onFoot->armour, sizeof(onFoot->armour));
-					uint8_t weapon = 0;
-					input.read((char*)&weapon, sizeof(weapon));
-					onFoot->weaponId = weapon & 0x3F;
-					onFoot->yesNo = weapon >> 6 & 0x3;
+					input.read((char*)&onFoot->weaponIdYesNo, sizeof(onFoot->weaponIdYesNo));
 					input.read((char*)&onFoot->specialAction, sizeof(onFoot->specialAction));
 					input.read((char*)&onFoot->velocity, sizeof(onFoot->velocity));
 					input.read((char*)&onFoot->surfing, sizeof(onFoot->surfing));
@@ -88,10 +85,7 @@ vector<DataBlock*> RecFile::load() {
 					input.read((char*)&vehicle->vehicleHealth, sizeof(vehicle->vehicleHealth));
 					input.read((char*)&vehicle->health, sizeof(vehicle->health));
 					input.read((char*)&vehicle->armour, sizeof(vehicle->armour));
-					uint8_t weapon = 0;
-					input.read((char*)&weapon, sizeof(weapon));
-					vehicle->weaponId = weapon & 0x3F;
-					vehicle->yesNo = weapon >> 6 & 0x3;
+					input.read((char*)&vehicle->weaponIdYesNo, sizeof(vehicle->weaponIdYesNo));
 					input.read((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
 					input.read((char*)&vehicle->gearState, sizeof(vehicle->gearState));
 					input.read((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
@@ -135,9 +129,7 @@ void RecFile::save(const vector<DataBlock*> &data) {
 				output.write((char*)&onFoot->angle, sizeof(onFoot->angle));
 				output.write((char*)&onFoot->health, sizeof(onFoot->health));
 				output.write((char*)&onFoot->armour, sizeof(onFoot->armour));
-				uint8_t weapon = onFoot->weaponId
-								| (onFoot->yesNo << 6);
-				output.write((char*)&weapon, sizeof(weapon));
+				output.write((char*)&onFoot->weaponIdYesNo, sizeof(onFoot->weaponIdYesNo));
 				output.write((char*)&onFoot->specialAction, sizeof(onFoot->specialAction));
 				output.write((char*)&onFoot->velocity, sizeof(onFoot->velocity));
 				output.write((char*)&onFoot->surfing, sizeof(onFoot->surfing));
@@ -165,9 +157,7 @@ void RecFile::save(const vector<DataBlock*> &data) {
 				output.write((char*)&vehicle->vehicleHealth, sizeof(vehicle->vehicleHealth));
 				output.write((char*)&vehicle->health, sizeof(vehicle->health));
 				output.write((char*)&vehicle->armour, sizeof(vehicle->armour));
-				uint8_t weapon = vehicle->weaponId
-								| (vehicle->yesNo << 6);
-				output.write((char*)&weapon, sizeof(weapon));
+				output.write((char*)&vehicle->weaponIdYesNo, sizeof(vehicle->weaponIdYesNo));
 				output.write((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
 				output.write((char*)&vehicle->gearState, sizeof(vehicle->gearState));
 				output.write((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));

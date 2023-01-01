@@ -15,8 +15,10 @@ class OnFootDataBlock : public DataBlock {
 		float angle[4];
 		uint8_t health;
 		uint8_t armour;
-		uint8_t weaponId; // Only 6 trailing bits used
-		uint8_t yesNo; // Only 2 trailing bits used, which are the 2 leading bits from weaponId
+		struct {
+			uint8_t weaponId : 6;
+			uint8_t yesNo : 2;
+		} weaponIdYesNo;
 		uint8_t specialAction;
 		float velocity[3];
 		float surfing[3];
