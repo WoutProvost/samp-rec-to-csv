@@ -150,10 +150,10 @@ void CsvFile::loadData(vector<DataBlock*> &data) {
 					vehicle->gearState = stoi(fields[21]);
 					vehicle->trailerId = stoi(fields[22]);
 					if (header->hydra) {
-						vehicle->hydraReactorAngleTrainSpeed.hydraReactorAngle[0] = stoi(fields[23]);
-						vehicle->hydraReactorAngleTrainSpeed.hydraReactorAngle[1] = stoi(fields[24]);
+						vehicle->hydraThrustAngleTrainSpeed.hydraThrustAngle[0] = stoi(fields[23]);
+						vehicle->hydraThrustAngleTrainSpeed.hydraThrustAngle[1] = stoi(fields[24]);
 					} else {
-						vehicle->hydraReactorAngleTrainSpeed.trainSpeed = stof(fields[23]);
+						vehicle->hydraThrustAngleTrainSpeed.trainSpeed = stof(fields[23]);
 					}
 					data.emplace_back(vehicle);
 					break;
@@ -264,8 +264,8 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 			;
 			if (header->hydra) {
 				output
-					<< "hydraReactorAngle0,"
-					<< "hydraReactorAngle1"
+					<< "hydraThrustAngle0,"
+					<< "hydraThrustAngle1"
 					<< "\n"
 				;
 			} else {
@@ -345,13 +345,13 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 				;
 				if (header->hydra) {
 					output
-						<< vehicle->hydraReactorAngleTrainSpeed.hydraReactorAngle[0] << ","
-						<< vehicle->hydraReactorAngleTrainSpeed.hydraReactorAngle[1]
+						<< vehicle->hydraThrustAngleTrainSpeed.hydraThrustAngle[0] << ","
+						<< vehicle->hydraThrustAngleTrainSpeed.hydraThrustAngle[1]
 						<< "\n"
 					;
 				} else {
 					output
-						<< vehicle->hydraReactorAngleTrainSpeed.trainSpeed
+						<< vehicle->hydraThrustAngleTrainSpeed.trainSpeed
 						<< "\n"
 					;
 				}

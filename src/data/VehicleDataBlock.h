@@ -26,9 +26,9 @@ class VehicleDataBlock : public DataBlock {
 		bool gearState; // 0 = gear down, 1 = gear up
 		uint16_t trailerId;
 		union {
-			uint16_t hydraReactorAngle[2]; // 0 to 5000
+			uint16_t hydraThrustAngle[2]; // 0 to 5000
 			float trainSpeed; // -1.0 to 1.0
-		} hydraReactorAngleTrainSpeed;
+		} hydraThrustAngleTrainSpeed;
 
 };
 

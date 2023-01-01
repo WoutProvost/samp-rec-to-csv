@@ -79,8 +79,8 @@ void RecFile::loadData(vector<DataBlock*> &data) {
 					input.read((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
 					input.read((char*)&vehicle->gearState, sizeof(vehicle->gearState));
 					input.read((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
-					input.read((char*)&vehicle->hydraReactorAngleTrainSpeed, sizeof(vehicle->hydraReactorAngleTrainSpeed));
-					if (vehicle->hydraReactorAngleTrainSpeed.hydraReactorAngle[0] > 5000 || vehicle->hydraReactorAngleTrainSpeed.hydraReactorAngle[1] > 5000) {
+					input.read((char*)&vehicle->hydraThrustAngleTrainSpeed, sizeof(vehicle->hydraThrustAngleTrainSpeed));
+					if (vehicle->hydraThrustAngleTrainSpeed.hydraThrustAngle[0] > 5000 || vehicle->hydraThrustAngleTrainSpeed.hydraThrustAngle[1] > 5000) {
 						hydra = false;
 					}
 					data.emplace_back(vehicle);
@@ -139,7 +139,7 @@ void RecFile::saveData(const vector<DataBlock*> &data) {
 				output.write((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
 				output.write((char*)&vehicle->gearState, sizeof(vehicle->gearState));
 				output.write((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
-				output.write((char*)&vehicle->hydraReactorAngleTrainSpeed, sizeof(vehicle->hydraReactorAngleTrainSpeed));
+				output.write((char*)&vehicle->hydraThrustAngleTrainSpeed, sizeof(vehicle->hydraThrustAngleTrainSpeed));
 				break;
 			}
 		}
