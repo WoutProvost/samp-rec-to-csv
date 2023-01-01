@@ -56,7 +56,7 @@ void RecFile::loadData(vector<DataBlock*> &data) {
 					input.read((char*)&onFoot->specialAction, sizeof(onFoot->specialAction));
 					input.read((char*)&onFoot->velocity, sizeof(onFoot->velocity));
 					input.read((char*)&onFoot->surfing, sizeof(onFoot->surfing));
-					input.read((char*)&onFoot->surfingVehicleId, sizeof(onFoot->surfingVehicleId));
+					input.read((char*)&onFoot->surfingId, sizeof(onFoot->surfingId));
 					input.read((char*)&onFoot->animationId, sizeof(onFoot->animationId));
 					input.read((char*)&onFoot->animationFlags, sizeof(onFoot->animationFlags));
 					data.emplace_back(onFoot);
@@ -117,7 +117,7 @@ void RecFile::saveData(const vector<DataBlock*> &data) {
 				output.write((char*)&onFoot->specialAction, sizeof(onFoot->specialAction));
 				output.write((char*)&onFoot->velocity, sizeof(onFoot->velocity));
 				output.write((char*)&onFoot->surfing, sizeof(onFoot->surfing));
-				output.write((char*)&onFoot->surfingVehicleId, sizeof(onFoot->surfingVehicleId));
+				output.write((char*)&onFoot->surfingId, sizeof(onFoot->surfingId));
 				output.write((char*)&onFoot->animationId, sizeof(onFoot->animationId));
 				output.write((char*)&onFoot->animationFlags, sizeof(onFoot->animationFlags));
 				break;

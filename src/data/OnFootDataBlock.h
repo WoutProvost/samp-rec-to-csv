@@ -22,7 +22,7 @@ class OnFootDataBlock : public DataBlock {
 		uint8_t specialAction;
 		float velocity[3];
 		float surfing[3];
-		uint16_t surfingVehicleId;
+		uint16_t surfingId;
 		uint16_t animationId;
 		struct {
 			uint8_t animationDelta;

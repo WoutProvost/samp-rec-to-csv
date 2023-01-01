@@ -103,7 +103,7 @@ void CsvFile::loadData(vector<DataBlock*> &data) {
 					onFoot->surfing[0] = stof(fields[19]);
 					onFoot->surfing[1] = stof(fields[20]);
 					onFoot->surfing[2] = stof(fields[21]);
-					onFoot->surfingVehicleId = stoi(fields[22]);
+					onFoot->surfingId = stoi(fields[22]);
 					onFoot->animationId = stoi(fields[23]);
 					onFoot->animationFlags.animationDelta = stoi(fields[24]);
 					onFoot->animationFlags.animationLoop = stoi(fields[25]);
@@ -224,7 +224,7 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 				<< "surfingX,"
 				<< "surfingY,"
 				<< "surfingZ,"
-				<< "surfingVehicleId,"
+				<< "surfingId,"
 				<< "animationId,"
 				<< "animationDelta,"
 				<< "animationLoop,"
@@ -304,7 +304,7 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 					<< onFoot->surfing[0] << ','
 					<< onFoot->surfing[1] << ','
 					<< onFoot->surfing[2] << ','
-					<< onFoot->surfingVehicleId << ","
+					<< onFoot->surfingId << ","
 					<< onFoot->animationId << ","
 					<< +onFoot->animationFlags.animationDelta << ","
 					<< onFoot->animationFlags.animationLoop << ","
