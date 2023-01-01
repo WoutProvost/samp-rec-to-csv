@@ -46,7 +46,7 @@ vector<DataBlock*> RecFile::load() {
 		while (input.peek() != EOF) {
 			switch (header->type) {
 				case PlayerRecordingType::PLAYER_RECORDING_TYPE_ONFOOT: {
-					OnFootDataBlock *onFoot = new OnFootDataBlock();				
+					OnFootDataBlock *onFoot = new OnFootDataBlock();
 					input.read((char*)&onFoot->time, sizeof(onFoot->time));
 					input.read((char*)&onFoot->leftRight, sizeof(onFoot->leftRight));
 					input.read((char*)&onFoot->upDown, sizeof(onFoot->upDown));

@@ -130,7 +130,7 @@ void Converter::printError(const string &msg, bool printUsageAndExit) {
 	}
 }
 
-void Converter::printUsageAndExitWithCode(bool fail) {	
+void Converter::printUsageAndExitWithCode(bool fail) {
 	cerr << "Usage: " << cmd << " [source" << extSrc << "] [destination" << extDest << "]" << endl;
 	cerr << "       " << cmd << " [source" << extSrc << "]... [directory]" << endl;
 	exit(fail ? EXIT_FAILURE : EXIT_SUCCESS);

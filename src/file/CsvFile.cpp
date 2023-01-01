@@ -178,10 +178,10 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 
 	// Write header
 	HeaderDataBlock *header = (HeaderDataBlock*)data[0];
-	output << "#"		
+	output << "#"
 		<< "version,"
 		<< "type"
-	;	
+	;
 	if (header->type == PlayerRecordingType::PLAYER_RECORDING_TYPE_DRIVER) {
 		output << ","
 			<< "hydra"
@@ -351,7 +351,7 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 					<< +vehicle->sirenState << ","
 					<< +vehicle->gearState << ","
 					<< vehicle->trailerId << ","
-				;					
+				;
 				if (header->hydra) {
 					output
 						<< vehicle->hydraReactorAngleTrainSpeed.hydraReactorAngle[0] << ","
