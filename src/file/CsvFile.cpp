@@ -94,8 +94,8 @@ void CsvFile::loadData(vector<DataBlock*> &data) {
 					onFoot->rotation[3] = stof(fields[10]);
 					onFoot->health = stoi(fields[11]);
 					onFoot->armour = stoi(fields[12]);
-					onFoot->weaponIdYesNo.weaponId = stoi(fields[13]);
-					onFoot->weaponIdYesNo.yesNo = stoi(fields[14]);
+					onFoot->weaponIdYesNoBack.weaponId = stoi(fields[13]);
+					onFoot->weaponIdYesNoBack.yesNoBack = stoi(fields[14]);
 					onFoot->specialAction = stoi(fields[15]);
 					onFoot->velocity[0] = stof(fields[16]);
 					onFoot->velocity[1] = stof(fields[17]);
@@ -144,8 +144,8 @@ void CsvFile::loadData(vector<DataBlock*> &data) {
 					vehicle->vehicleHealth = stof(fields[15]);
 					vehicle->health = stoi(fields[16]);
 					vehicle->armour = stoi(fields[17]);
-					vehicle->weaponIdYesNo.weaponId = stoi(fields[18]);
-					vehicle->weaponIdYesNo.yesNo = stoi(fields[19]);
+					vehicle->weaponIdYesNoBack.weaponId = stoi(fields[18]);
+					vehicle->weaponIdYesNoBack.yesNoBack = stoi(fields[19]);
 					vehicle->sirenState = stoi(fields[20]);
 					vehicle->gearState = stoi(fields[21]);
 					vehicle->trailerId = stoi(fields[22]);
@@ -216,7 +216,7 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 				<< "health,"
 				<< "armour,"
 				<< "weaponId,"
-				<< "yesNo,"
+				<< "yesNoBack,"
 				<< "specialAction,"
 				<< "velocityX,"
 				<< "velocityY,"
@@ -257,7 +257,7 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 				<< "health,"
 				<< "armour,"
 				<< "weaponId,"
-				<< "yesNo,"
+				<< "yesNoBack,"
 				<< "sirenState,"
 				<< "gearState,"
 				<< "trailerId,"
@@ -295,8 +295,8 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 					<< onFoot->rotation[3] << ","
 					<< +onFoot->health << ","
 					<< +onFoot->armour << ","
-					<< +onFoot->weaponIdYesNo.weaponId << ","
-					<< +onFoot->weaponIdYesNo.yesNo << ","
+					<< +onFoot->weaponIdYesNoBack.weaponId << ","
+					<< +onFoot->weaponIdYesNoBack.yesNoBack << ","
 					<< +onFoot->specialAction << ","
 					<< onFoot->velocity[0] << ','
 					<< onFoot->velocity[1] << ','
@@ -337,8 +337,8 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 					<< vehicle->vehicleHealth << ","
 					<< +vehicle->health << ","
 					<< +vehicle->armour << ","
-					<< +vehicle->weaponIdYesNo.weaponId << ","
-					<< +vehicle->weaponIdYesNo.yesNo << ","
+					<< +vehicle->weaponIdYesNoBack.weaponId << ","
+					<< +vehicle->weaponIdYesNoBack.yesNoBack << ","
 					<< +vehicle->sirenState << ","
 					<< +vehicle->gearState << ","
 					<< vehicle->trailerId << ","

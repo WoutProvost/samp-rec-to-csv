@@ -17,8 +17,8 @@ class OnFootDataBlock : public DataBlock {
 		uint8_t armour;
 		struct {
 			uint8_t weaponId : 6;
-			uint8_t yesNo : 2;
-		} weaponIdYesNo;
+			uint8_t yesNoBack : 2;
+		} weaponIdYesNoBack;
 		uint8_t specialAction;
 		float velocity[3];
 		float surfing[3];

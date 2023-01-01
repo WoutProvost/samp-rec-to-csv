@@ -52,7 +52,7 @@ void RecFile::loadData(vector<DataBlock*> &data) {
 					input.read((char*)&onFoot->rotation, sizeof(onFoot->rotation));
 					input.read((char*)&onFoot->health, sizeof(onFoot->health));
 					input.read((char*)&onFoot->armour, sizeof(onFoot->armour));
-					input.read((char*)&onFoot->weaponIdYesNo, sizeof(onFoot->weaponIdYesNo));
+					input.read((char*)&onFoot->weaponIdYesNoBack, sizeof(onFoot->weaponIdYesNoBack));
 					input.read((char*)&onFoot->specialAction, sizeof(onFoot->specialAction));
 					input.read((char*)&onFoot->velocity, sizeof(onFoot->velocity));
 					input.read((char*)&onFoot->surfing, sizeof(onFoot->surfing));
@@ -75,7 +75,7 @@ void RecFile::loadData(vector<DataBlock*> &data) {
 					input.read((char*)&vehicle->vehicleHealth, sizeof(vehicle->vehicleHealth));
 					input.read((char*)&vehicle->health, sizeof(vehicle->health));
 					input.read((char*)&vehicle->armour, sizeof(vehicle->armour));
-					input.read((char*)&vehicle->weaponIdYesNo, sizeof(vehicle->weaponIdYesNo));
+					input.read((char*)&vehicle->weaponIdYesNoBack, sizeof(vehicle->weaponIdYesNoBack));
 					input.read((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
 					input.read((char*)&vehicle->gearState, sizeof(vehicle->gearState));
 					input.read((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
@@ -113,7 +113,7 @@ void RecFile::saveData(const vector<DataBlock*> &data) {
 				output.write((char*)&onFoot->rotation, sizeof(onFoot->rotation));
 				output.write((char*)&onFoot->health, sizeof(onFoot->health));
 				output.write((char*)&onFoot->armour, sizeof(onFoot->armour));
-				output.write((char*)&onFoot->weaponIdYesNo, sizeof(onFoot->weaponIdYesNo));
+				output.write((char*)&onFoot->weaponIdYesNoBack, sizeof(onFoot->weaponIdYesNoBack));
 				output.write((char*)&onFoot->specialAction, sizeof(onFoot->specialAction));
 				output.write((char*)&onFoot->velocity, sizeof(onFoot->velocity));
 				output.write((char*)&onFoot->surfing, sizeof(onFoot->surfing));
@@ -135,7 +135,7 @@ void RecFile::saveData(const vector<DataBlock*> &data) {
 				output.write((char*)&vehicle->vehicleHealth, sizeof(vehicle->vehicleHealth));
 				output.write((char*)&vehicle->health, sizeof(vehicle->health));
 				output.write((char*)&vehicle->armour, sizeof(vehicle->armour));
-				output.write((char*)&vehicle->weaponIdYesNo, sizeof(vehicle->weaponIdYesNo));
+				output.write((char*)&vehicle->weaponIdYesNoBack, sizeof(vehicle->weaponIdYesNoBack));
 				output.write((char*)&vehicle->sirenState, sizeof(vehicle->sirenState));
 				output.write((char*)&vehicle->gearState, sizeof(vehicle->gearState));
 				output.write((char*)&vehicle->trailerId, sizeof(vehicle->trailerId));
