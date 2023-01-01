@@ -28,7 +28,7 @@ class VehicleDataBlock : public DataBlock {
 		union {
 			uint16_t hydraReactorAngle[2]; // 0 to 5000
 			float trainSpeed; // -1.0 to 1.0
-		};
+		} hydraReactorAngleTrainSpeed;
 
 };
 
