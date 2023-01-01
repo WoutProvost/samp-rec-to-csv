@@ -5,13 +5,14 @@
 
 class RecFile : public File {
 
+	private:
+		// Overriden abstract methods from base class
+		void loadData(vector<DataBlock*> &data);
+		void saveData(const vector<DataBlock*> &data);
+
 	public:
 		// Constructors
 		RecFile(const string &name);
-
-		// Overriden abstract methods from base class
-		vector<DataBlock*> load();
-		void save(const vector<DataBlock*> &data);
 
 };
 

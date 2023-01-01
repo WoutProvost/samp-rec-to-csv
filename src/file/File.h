@@ -21,6 +21,10 @@ class File {
 		// Attributes
 		bool binary;
 
+		// Abstract methods
+		virtual void loadData(vector<DataBlock*> &data) = 0;
+		virtual void saveData(const vector<DataBlock*> &data) = 0;
+
 	protected:
 		// Attributes
 		string name;
@@ -31,9 +35,9 @@ class File {
 		File(const string &name, bool binary);
 
 	public:
-		// Abstract methods
-		virtual vector<DataBlock*> load();
-		virtual void save(const vector<DataBlock*> &data);
+		// Methods
+		vector<DataBlock*> load();
+		void save(const vector<DataBlock*> &data);
 
 };
 

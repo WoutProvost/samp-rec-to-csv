@@ -16,7 +16,11 @@ vector<DataBlock*> File::load() {
 
 	input = ifstream(name, mode);
 
-	return vector<DataBlock*>();
+	vector<DataBlock*> data;
+	loadData(data);
+
+	input.close();
+	return data;
 }
 
 void File::save(const vector<DataBlock*> &data) {
@@ -26,4 +30,8 @@ void File::save(const vector<DataBlock*> &data) {
 	}
 
 	output = ofstream(name, mode);
+
+	saveData(data);
+
+	output.close();
 }

@@ -9,13 +9,13 @@ class CsvFile : public File {
 		// Methods
 		vector<string> readLine();
 
+		// Overriden abstract methods from base class
+		void loadData(vector<DataBlock*> &data);
+		void saveData(const vector<DataBlock*> &data);
+
 	public:
 		// Constructors
 		CsvFile(const string &name);
-
-		// Overriden abstract methods from base class
-		vector<DataBlock*> load();
-		void save(const vector<DataBlock*> &data);
 
 };
 

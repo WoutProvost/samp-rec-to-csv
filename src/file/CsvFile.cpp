@@ -34,10 +34,7 @@ vector<string> CsvFile::readLine() {
 	return fields;
 }
 
-vector<DataBlock*> CsvFile::load() {
-	// Call base class method
-	vector<DataBlock*> data = File::load();
-
+void CsvFile::loadData(vector<DataBlock*> &data) {
 	vector<string> fields = readLine();
 	if (fields.size() >= 2 && fields.size() <= 3) {
 		bool corrupt = false;
@@ -164,15 +161,9 @@ vector<DataBlock*> CsvFile::load() {
 			}
 		}
 	}
-
-	input.close();
-	return data;
 }
 
-void CsvFile::save(const vector<DataBlock*> &data) {
-	// Call base class method
-	File::save(data);
-
+void CsvFile::saveData(const vector<DataBlock*> &data) {
 	// Set floating point precision
 	output << setprecision(numeric_limits<float>::max_digits10);
 
@@ -368,6 +359,4 @@ void CsvFile::save(const vector<DataBlock*> &data) {
 			}
 		}
 	}
-
-	output.close();
 }

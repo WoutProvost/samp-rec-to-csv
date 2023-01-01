@@ -8,10 +8,7 @@ RecFile::RecFile(const string &name) :
 	File::File(name, true) {
 }
 
-vector<DataBlock*> RecFile::load() {
-	// Call base class method
-	vector<DataBlock*> data = File::load();
-
+void RecFile::loadData(vector<DataBlock*> &data) {
 	// Read header
 	HeaderDataBlock *header = new HeaderDataBlock();
 	input.read((char*)&header->version, sizeof(header->version));
@@ -95,15 +92,9 @@ vector<DataBlock*> RecFile::load() {
 			header->hydra = hydra;
 		}
 	}
-
-	input.close();
-	return data;
 }
 
-void RecFile::save(const vector<DataBlock*> &data) {
-	// Call base class method
-	File::save(data);
-
+void RecFile::saveData(const vector<DataBlock*> &data) {
 	// Write header
 	HeaderDataBlock *header = (HeaderDataBlock*)data[0];
 	output.write((char*)&header->version, sizeof(header->version));
@@ -153,6 +144,4 @@ void RecFile::save(const vector<DataBlock*> &data) {
 			}
 		}
 	}
-
-	output.close();
 }
