@@ -12,7 +12,7 @@ class OnFootDataBlock : public DataBlock {
 		int16_t upDown;
 		uint16_t keys;
 		float position[3];
-		float angle[4];
+		float rotation[4];
 		uint8_t health;
 		uint8_t armour;
 		struct {

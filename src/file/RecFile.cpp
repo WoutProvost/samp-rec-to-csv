@@ -49,7 +49,7 @@ void RecFile::loadData(vector<DataBlock*> &data) {
 					input.read((char*)&onFoot->upDown, sizeof(onFoot->upDown));
 					input.read((char*)&onFoot->keys, sizeof(onFoot->keys));
 					input.read((char*)&onFoot->position, sizeof(onFoot->position));
-					input.read((char*)&onFoot->angle, sizeof(onFoot->angle));
+					input.read((char*)&onFoot->rotation, sizeof(onFoot->rotation));
 					input.read((char*)&onFoot->health, sizeof(onFoot->health));
 					input.read((char*)&onFoot->armour, sizeof(onFoot->armour));
 					input.read((char*)&onFoot->weaponIdYesNo, sizeof(onFoot->weaponIdYesNo));
@@ -69,7 +69,7 @@ void RecFile::loadData(vector<DataBlock*> &data) {
 					input.read((char*)&vehicle->leftRight, sizeof(vehicle->leftRight));
 					input.read((char*)&vehicle->upDown, sizeof(vehicle->upDown));
 					input.read((char*)&vehicle->keys, sizeof(vehicle->keys));
-					input.read((char*)&vehicle->angle, sizeof(vehicle->angle));
+					input.read((char*)&vehicle->rotation, sizeof(vehicle->rotation));
 					input.read((char*)&vehicle->position, sizeof(vehicle->position));
 					input.read((char*)&vehicle->velocity, sizeof(vehicle->velocity));
 					input.read((char*)&vehicle->vehicleHealth, sizeof(vehicle->vehicleHealth));
@@ -110,7 +110,7 @@ void RecFile::saveData(const vector<DataBlock*> &data) {
 				output.write((char*)&onFoot->upDown, sizeof(onFoot->upDown));
 				output.write((char*)&onFoot->keys, sizeof(onFoot->keys));
 				output.write((char*)&onFoot->position, sizeof(onFoot->position));
-				output.write((char*)&onFoot->angle, sizeof(onFoot->angle));
+				output.write((char*)&onFoot->rotation, sizeof(onFoot->rotation));
 				output.write((char*)&onFoot->health, sizeof(onFoot->health));
 				output.write((char*)&onFoot->armour, sizeof(onFoot->armour));
 				output.write((char*)&onFoot->weaponIdYesNo, sizeof(onFoot->weaponIdYesNo));
@@ -129,7 +129,7 @@ void RecFile::saveData(const vector<DataBlock*> &data) {
 				output.write((char*)&vehicle->leftRight, sizeof(vehicle->leftRight));
 				output.write((char*)&vehicle->upDown, sizeof(vehicle->upDown));
 				output.write((char*)&vehicle->keys, sizeof(vehicle->keys));
-				output.write((char*)&vehicle->angle, sizeof(vehicle->angle));
+				output.write((char*)&vehicle->rotation, sizeof(vehicle->rotation));
 				output.write((char*)&vehicle->position, sizeof(vehicle->position));
 				output.write((char*)&vehicle->velocity, sizeof(vehicle->velocity));
 				output.write((char*)&vehicle->vehicleHealth, sizeof(vehicle->vehicleHealth));

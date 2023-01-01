@@ -12,7 +12,7 @@ class VehicleDataBlock : public DataBlock {
 		int16_t leftRight;
 		int16_t upDown;
 		uint16_t keys;
-		float angle[4];
+		float rotation[4];
 		float position[3];
 		float velocity[3];
 		float vehicleHealth;

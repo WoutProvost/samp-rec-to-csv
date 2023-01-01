@@ -88,10 +88,10 @@ void CsvFile::loadData(vector<DataBlock*> &data) {
 					onFoot->position[0] = stof(fields[4]);
 					onFoot->position[1] = stof(fields[5]);
 					onFoot->position[2] = stof(fields[6]);
-					onFoot->angle[0] = stof(fields[7]);
-					onFoot->angle[1] = stof(fields[8]);
-					onFoot->angle[2] = stof(fields[9]);
-					onFoot->angle[3] = stof(fields[10]);
+					onFoot->rotation[0] = stof(fields[7]);
+					onFoot->rotation[1] = stof(fields[8]);
+					onFoot->rotation[2] = stof(fields[9]);
+					onFoot->rotation[3] = stof(fields[10]);
 					onFoot->health = stoi(fields[11]);
 					onFoot->armour = stoi(fields[12]);
 					onFoot->weaponIdYesNo.weaponId = stoi(fields[13]);
@@ -131,10 +131,10 @@ void CsvFile::loadData(vector<DataBlock*> &data) {
 					vehicle->leftRight = stoi(fields[2]);
 					vehicle->upDown = stoi(fields[3]);
 					vehicle->keys = stoi(fields[4]);
-					vehicle->angle[0] = stof(fields[5]);
-					vehicle->angle[1] = stof(fields[6]);
-					vehicle->angle[2] = stof(fields[7]);
-					vehicle->angle[3] = stof(fields[8]);
+					vehicle->rotation[0] = stof(fields[5]);
+					vehicle->rotation[1] = stof(fields[6]);
+					vehicle->rotation[2] = stof(fields[7]);
+					vehicle->rotation[3] = stof(fields[8]);
 					vehicle->position[0] = stof(fields[9]);
 					vehicle->position[1] = stof(fields[10]);
 					vehicle->position[2] = stof(fields[11]);
@@ -209,10 +209,10 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 				<< "positionX,"
 				<< "positionY,"
 				<< "positionZ,"
-				<< "angleW,"
-				<< "angleX,"
-				<< "angleY,"
-				<< "angleZ,"
+				<< "rotationW,"
+				<< "rotationX,"
+				<< "rotationY,"
+				<< "rotationZ,"
 				<< "health,"
 				<< "armour,"
 				<< "weaponId,"
@@ -243,10 +243,10 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 				<< "leftRight,"
 				<< "upDown,"
 				<< "keys,"
-				<< "angleW,"
-				<< "angleX,"
-				<< "angleY,"
-				<< "angleZ,"
+				<< "rotationW,"
+				<< "rotationX,"
+				<< "rotationY,"
+				<< "rotationZ,"
 				<< "positionX,"
 				<< "positionY,"
 				<< "positionZ,"
@@ -289,10 +289,10 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 					<< onFoot->position[0] << ","
 					<< onFoot->position[1] << ","
 					<< onFoot->position[2] << ","
-					<< onFoot->angle[0] << ","
-					<< onFoot->angle[1] << ","
-					<< onFoot->angle[2] << ","
-					<< onFoot->angle[3] << ","
+					<< onFoot->rotation[0] << ","
+					<< onFoot->rotation[1] << ","
+					<< onFoot->rotation[2] << ","
+					<< onFoot->rotation[3] << ","
 					<< +onFoot->health << ","
 					<< +onFoot->armour << ","
 					<< +onFoot->weaponIdYesNo.weaponId << ","
@@ -324,10 +324,10 @@ void CsvFile::saveData(const vector<DataBlock*> &data) {
 					<< vehicle->leftRight << ","
 					<< vehicle->upDown << ","
 					<< vehicle->keys << ","
-					<< vehicle->angle[0] << ","
-					<< vehicle->angle[1] << ","
-					<< vehicle->angle[2] << ","
-					<< vehicle->angle[3] << ","
+					<< vehicle->rotation[0] << ","
+					<< vehicle->rotation[1] << ","
+					<< vehicle->rotation[2] << ","
+					<< vehicle->rotation[3] << ","
 					<< vehicle->position[0] << ","
 					<< vehicle->position[1] << ","
 					<< vehicle->position[2] << ","
