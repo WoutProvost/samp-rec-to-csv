@@ -108,7 +108,7 @@ vector<DataBlock*> CsvFile::load() {
 					onFoot->surfing[2] = stof(fields[21]);
 					onFoot->surfingVehicleId = stoi(fields[22]);
 					onFoot->animationId = stoi(fields[23]);
-					onFoot->animationFlags.animationDelta = stof(fields[24]);
+					onFoot->animationFlags.animationDelta = stoi(fields[24]);
 					onFoot->animationFlags.animationLoop = stoi(fields[25]);
 					onFoot->animationFlags.animationLockX = stoi(fields[26]);
 					onFoot->animationFlags.animationLockY = stoi(fields[27]);
