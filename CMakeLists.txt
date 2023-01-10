@@ -4,6 +4,10 @@ project(samp-rec-to-csv
 	DESCRIPTION "File format converter from .rec to .csv and vice versa, which NPCs use in SA-MP to play back recordings"
 	LANGUAGES CXX)
 
+# Require C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # Add these libraries to be built
 add_library(converter SHARED src/Converter.h src/Converter.cpp)
 
